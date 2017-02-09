@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import { itemsFetchData, itemsSingleFetchData } from '../actions/items';
-
+import SkyLight from 'react-skylight'
 class App extends Component {
   componentDidMount() {
     this.props.fetchData('http://eaglecom.diametrix.com.au/wp-json/wp/v2/floor-api');
@@ -11,6 +11,7 @@ class App extends Component {
 
   dataselect(data) {
     this.props.fetchSingleData(data)
+    this.refs.simpleDialog.show()
   }
 
   render() {
@@ -29,7 +30,9 @@ class App extends Component {
           <li key={post.id} onClick={this.dataselect.bind(this.state, post)}>{post.title.rendered}</li>
         ))}
       </ul>
-      <h2>{!this.props.singlepost.id ? 'not selected' : this.props.singlepost.title.rendered}</h2>
+        <SkyLight hideOnOverlayClicked ref="simpleDialog">
+          <h2>{!this.props.singlepost.id ? 'not selected' : this.props.singlepost.title.rendered}</h2>
+        </SkyLight>
       </div>
     );
   }

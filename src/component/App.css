@@ -1,3 +1,4 @@
+@import '~antd/dist/antd.css';
 .App {
   text-align: center;
 }
@@ -26,8 +27,22 @@
   padding:20px;
 }
 
-.floor-click:hover {
+.is__link:hover {
   cursor:pointer;
+  background:#faead6;
+  color:#000;
+}
+
+.floor__detail {
+  border-top:1px solid #a0a1a5;
+}
+
+.floor__detail {
+    padding: 14px 10px;
+}
+
+.floor__detail.floor__detail--2133 {
+    padding: 21px 10px;
 }
 
 @keyframes App-logo-spin {

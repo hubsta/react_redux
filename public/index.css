@@ -1,0 +1,17 @@
+.stack__image {
+    width:555px;
+    position:absolute;
+    right:0;
+    top:0;
+    z-index:200;
+}
+
+.stack__plan {
+    position:relative;
+}
+
+#root {
+    z-index:500;
+    position:relative;
+    padding-top: 13px;
+}

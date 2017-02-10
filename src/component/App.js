@@ -2,14 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import { itemsFetchData, itemsSingleFetchData } from '../actions/items';
-import SkyLight from 'react-skylight'
+import SkyLight from 'react-skylight';
+ 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchData('http://eaglecom.diametrix.com.au/wp-json/wp/v2/floor-api');
+    this.props.fetchData('http://175eagle.local/wp-json/wp/v2/floor-api?per_page=100');
     this.dataselect = this.dataselect.bind(this);
   }
 
-  dataselect(data) {
+  dataselect(data) { 
     this.props.fetchSingleData(data)
     this.refs.simpleDialog.show()
   }
@@ -23,17 +24,49 @@ class App extends Component {
       return <p>Loading…</p>;
     }
 
-    return (
+    var myBigGreenDialog = {
+      backgroundColor: '#e8e8e8',
+      width: '100%',
+      height: '100%',
+      marginTop: '0',
+      marginLeft: '0',
+      left: '0',
+      top: '0',
+      bottom: 'auto',
+      padding: '0'
+    };
+
+    return ( 
       <div>
-      <ul>
         {this.props.posts.map((post) => (
-          <li key={post.id} onClick={this.dataselect.bind(this.state, post)}>{post.title.rendered}</li>
+          <div key={post.id} onClick={post.acf.floor_is_available === true ? this.dataselect.bind(this.state, post) : null} className={post.acf.floor_is_available === true ? 'is__link floor__detail floor__detail--' + post.id : 'floor__detail floor__detail--'+ post.id}>
+            <div className="row">
+            <div className="col-md-6">
+              <div className="row">
+                <div className="col-md-4">{post.title.rendered}</div>
+                <div className="col-md-4">{post.acf.fps_floor_sqm}</div>
+                <div className="col-md-4"></div>
+              </div>
+            </div>
+            </div>
+          </div>
         ))}
-      </ul>
-        <SkyLight hideOnOverlayClicked ref="simpleDialog">
-          <h2>{!this.props.singlepost.id ? 'not selected' : this.props.singlepost.title.rendered}</h2>
+        <SkyLight dialogStyles={myBigGreenDialog} hideOnOverlayClicked ref="simpleDialog">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <h2>{!this.props.singlepost.id ? 'not selected' : this.props.singlepost.title.rendered}</h2>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6"></div>
+              <div className="col-md-6">
+                {!this.props.singlepost.id ? 'not selected' : this.props.singlepost.acf.fps_main_title}
+              </div>
+            </div>
+          </div>
         </SkyLight>
-      </div>
+      </div> 
     );
   }
 }
